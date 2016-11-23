@@ -1,5 +1,7 @@
 var fibonacci = function(n) {
-    if(n > 1) {
+    if(n > 40) {
+        throw new Error('EXCEEDS LIMIT!');
+    } else if(n > 1) {
         return fibonacci(n-1) + fibonacci(n-2);
     } else if(n == 1){
         return 1;
