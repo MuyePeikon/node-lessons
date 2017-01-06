@@ -8,7 +8,7 @@ var fs = require('fs');
 fs.readFile('in.txt', 'utf8', function(err, res){
     console.log('Start Working...'.cyan);
     var baseUrl = 'http://cgi.kg.qq.com/fcgi-bin/kg_ugc_getdetail?callback=jsopgetsonginfo&inCharset=GB2312&outCharset=utf-8&format=&g_tk=519603570&g_tk_openkey=519603570&v=4&shareid=';
-    var songUrls = res.replace(/.+\?s=(\w+?)(?:\b|&.+)/g, baseUrl + '$1').split('\n').slice(0, -1);
+    var songUrls = res.replace(/.+\?s=(.+?)(?:\b|&.+)/g, baseUrl + '$1').split('\n').slice(0, -1);
     console.log(songUrls);
     var count = 0;
     async.mapLimit(songUrls, 2, function(item, callback){
@@ -23,7 +23,7 @@ fs.readFile('in.txt', 'utf8', function(err, res){
                     var sData = {
                         songName: rData.song_name.replace(' ','_'),
                         songAddr: rData.playurl,
-                        singer: rData.nick.replace(' ','_')
+                        singer: rData.nick.replace(' ','_').replace(/\[em].+\[\/em]/, '')
                     }
                     callback(null, sData);
                 }, delay);
